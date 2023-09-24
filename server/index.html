@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <script src="./node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <main>
+        <div id="result"></div>
+        <div id="reader"></div>
+    </main>
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(decodedText)
+
+            data = decodedText.split(',')
+            console.log(data)
+
+            id = data[0]
+            console.log("id:" + id)
+            
+            address = data[1]
+            console.log("address: " + address)
+
+            document.getElementById("result").innerHTML = `<h1>Success!</h1><h2>ID: ${id}</br>ADDRESS: ${address}</h2><a href="http://localhost:3000/${id}/${address}">CLIQUEZ POUR ENVOYER</a>`;
+            document.getElementById("reader").remove;
+        }
+
+        function onScanFailure(error) {
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner("reader",
+        {
+            fps: 10,
+            qrbox: {width: 250, height: 250}
+        }, false);
+
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+</body>
+</html>
