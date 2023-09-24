@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import LugTrack from "./artifacts/contracts/LugTrack.sol/LugTrack.json";
 import "./App.css";
 
-let contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+let contractAddress = "0x998abeb3E57409262aE5b751f60747921B33613E";
 
 function App() {
   const [addresses, setAddresses] = useState([]);
@@ -29,14 +29,24 @@ function App() {
   }, []);
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 5000);
+    const intervalId = setInterval(fetchData, 10000);
     return () => clearInterval(intervalId);
   }, []);
   useEffect(() => {
     console.log("apiIds: " + apiId);
     console.log("apiState: " + apiState);
     console.log("states: " + states);
-  }, [apiState,apiId,apiAddress,address,weigth,lugId,state,owner,addresses,luggageIds,weights,states]);
+  }, [apiId,apiAddress,address,weigth,lugId,state,owner,addresses,luggageIds,weights,states]);
+  useEffect(() => {
+    if(Object.keys(luggageIds)[0]==apiId){
+      console.log("Luggage found");
+      updateLuggageState();
+      }
+    if(Object.keys(luggageIds)[1]==apiId){
+        console.log("Luggage found");
+        updateLuggageState();
+        }
+  }, [apiState]);
   async function isOwner() {
     if (typeof window.ethereum !== "undefined") {
       const accounts = await window.ethereum.request({
@@ -202,14 +212,6 @@ function App() {
           {luggageIds.map((item, index) => (
               <div>Luggage ID: {item.toString()}, Weight: {weights[index].toString()},State: {states[index]}</div>
           ))}
-          <button className="create" onClick={updateLuggageState}>Create</button>
-          {/* <h1>Update Luggage State</h1>
-          <input type="text" className="address_input" placeholder="Address" onChange={changeLugId}/>
-          <button className="create" onClick={updateLuggageState}>Create</button>
-
-          <h1>Get Luggage Data</h1>
-          <button className="create" onClick={getLuggageData}>Get Data</button>
-          <button className="create" onClick={fetchData}>Get Data</button> */}
         </>
       )}
     </>

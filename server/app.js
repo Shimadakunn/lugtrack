@@ -13,7 +13,7 @@ function incrementCounter() {
   console.log(counter);
 }
 
-setInterval(incrementCounter, 5000);
+setInterval(incrementCounter, 10000);
 
 app.use(express.json());
 app.use(cors({
@@ -27,6 +27,7 @@ let data = {
 
 app.get('/:id/:address', (req, res) => {
     console.log(`Data received: ID: ${req.params.id}, ADDRESS: ${req.params.address}`)
+    counter = 0;
     data = { 
         "id": req.params.id, 
         "address": req.params.address,
