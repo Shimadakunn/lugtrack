@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import LugTrack from "./artifacts/contracts/LugTrack.sol/LugTrack.json";
 import "./App.css";
 
-let contractAddress = "0x998abeb3E57409262aE5b751f60747921B33613E";
+let contractAddress = "0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25";
 
 function App() {
   const [addresses, setAddresses] = useState([]);
@@ -196,23 +196,30 @@ function App() {
   }
   return (
     <>
-      <div className="App">Owner: {owner.toString()}</div>
       {owner && (
-        <>
+        <div className="page">
           <h1>Passenger Creation</h1>
-          <input type="text" className="address_input" placeholder="Address" onChange={changeAddress}/>
-          <button className="create" onClick={createPassenger}>Create</button>
-          {addresses.map((item, index) => (
-            <div>Passengers: {item}</div>
-          ))}
+          <div classsName="passenger_input">
+            <input type="text" className="address_input" placeholder="Passenger Address" onChange={changeAddress}/>
+            <button className="create_passenger" onClick={createPassenger}>Create</button>
+          </div>
+          <div className="">
+            {addresses.map((item, index) => (
+              <div className="passenger">Passenger {index}: {item}</div>
+            ))}
+          </div>
           
           <h1>Luggage Creation</h1>
-          <input type="text" className="address_input" placeholder="Address" onChange={changeWeigth}/>
-          <button className="create" onClick={createLuggage}>Create</button>
+          <div classsName="passenger_input">
+            <input type="text" className="weight_input" placeholder="Luggage Weight" onChange={changeWeigth}/>
+            <button className="create_luggage" onClick={createLuggage}>Create</button>
+          </div>
           {luggageIds.map((item, index) => (
-              <div>Luggage ID: {item.toString()}, Weight: {weights[index].toString()},State: {states[index]}</div>
+              <div className="luggage">
+                Luggage ID: {item.toString()}, Weight: {weights[index].toString()}, State:<span className="state"> {states[index]}</span>
+              </div>
           ))}
-        </>
+        </div>
       )}
     </>
   );
